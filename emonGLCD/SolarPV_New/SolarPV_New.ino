@@ -62,7 +62,7 @@ RTC_Millis RTC;
 //---------------------------------------------------
 // Data structures for transfering data between units
 //---------------------------------------------------
-typedef struct { int power1, power2, power3, Vrms; } PayloadTX;         // neat way of packaging data for RF comms
+typedef struct { int power1, power2, power3, Vrms, powerFactor; } PayloadTX;         // neat way of packaging data for RF comms
 PayloadTX emontx;
 
 typedef struct { int temperature; } PayloadGLCD;
@@ -87,7 +87,7 @@ const int switch3=19;
 // emonGLCD variables 
 //---------------------------------------------------
 int hour = 12, minute = 0;
-double usekwh = 0, genkwh = 0, Volts = 0;
+double usekwh = 0, genkwh = 0, Volts = 0, Pf = 0;
 double use_history[7], gen_history[7];
 int cval_use, cval_gen;
 byte page = 1;
@@ -168,8 +168,11 @@ void loop()
     hour = now.hour();
     minute = now.minute();
     
-    Volts += (emontx.Vrms);
+    Volts = 0;
+    Volts += (emontx.Vrms) /100;
     
+    Pf = 0;
+    Pf += (emontx.powerFactor);
     
     if (SolarPV_type==1){
     usekwh += (emontx.power1 * 0.2) / 3600000;
@@ -204,7 +207,7 @@ void loop()
       
     if (cval_gen<PV_gen_offset) cval_gen=0;                  //set generation to zero when generation level drops below a certian level (at night) eg. 20W
     
-   
+
     last_switch_state = switch_state;
     switch_state = digitalRead(switch1);  
     if (!last_switch_state && switch_state) { page += 1; if (page>5) page = 1; }
@@ -229,7 +232,7 @@ void loop()
     }
     else if (page==4)
     {
-      draw_voltage_page("VOLTS" ,Volts, "Pf", genkwh);
+      draw_voltage_page("VOLTAGE :" , Volts, "Pf", Pf);
       draw_temperature_time_footer(temp, mintemp, maxtemp, hour,minute);
       glcd.refresh();
     }

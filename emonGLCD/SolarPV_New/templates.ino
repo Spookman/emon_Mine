@@ -22,17 +22,18 @@ void draw_voltage_page(char* powerstr, double powerval, char* energystr,  double
   strcat(str,""); 
   glcd.drawString(0,38,str);
 
-  // power value
+  // volts value
   glcd.setFont(font_helvB24);
   itoa((int)powerval,str,10);
-  strcat(str,"w");   
+  strcat(str,"v");   
   glcd.drawString(3,9,str);
   
-  // kwh per day value
+  // Power Factor
   glcd.setFont(font_clR6x8);
-  if (energyval<10.0) dtostrf(energyval,0,1,str); else itoa((int)energyval,str,10);
-  strcat(str,"kWh");
-  glcd.drawString(85,38,str);        
+  //if (energyval<10.0) 
+  dtostrf(energyval,0,2,str); //else itoa((int)energyval,str,10);
+  strcat(str,"");
+  glcd.drawString(20,38,str);        
 }
 
 
@@ -62,7 +63,7 @@ void draw_power_page(char* powerstr, double powerval, char* energystr,  double e
   // kwh per day value
   glcd.setFont(font_clR6x8);
   if (energyval<10.0) dtostrf(energyval,0,1,str); else itoa((int)energyval,str,10);
-  strcat(str,"kWh");
+  strcat(str,"");
   glcd.drawString(85,38,str);        
 }
 
@@ -96,7 +97,7 @@ void draw_temperature_time_footer(double temp, double mintemp, double maxtemp, d
   // Time
   char str2[5];
   itoa((int)hour,str,10);
-  if  (minute<10) strcat(str,":0"); else strcat(str,":");
+  if  (minute<10) strcat(str,": 0"); else strcat(str,": ");
   itoa((int)minute,str2,10);
   strcat(str,str2); 
   glcd.setFont(font_helvB12);
@@ -173,7 +174,7 @@ void draw_solar_page(double use, double usekwh, double gen, double maxgen, doubl
   glcd.setFont(font_helvB14);
 
   // Amount of power currently being used
-  if(use > 1000)
+  if(use > 10000)
   {
     dtostrf(use/1000,2,1,str);
     strcat(str,"kw");   
@@ -187,7 +188,7 @@ void draw_solar_page(double use, double usekwh, double gen, double maxgen, doubl
   glcd.drawString(3,9,str);
 
   // Amount of energy being generated
-  if(gen>1000)
+  if(gen>10000)
   {
     dtostrf(gen/1000,2,1,str);
     strcat(str,"kw");   
@@ -203,7 +204,7 @@ void draw_solar_page(double use, double usekwh, double gen, double maxgen, doubl
   glcd.drawString(71,9,str);
 
   // Amount of energy coming from or going into the grid
-  if(grid<-1000 || grid>1000)
+  if(grid<-1000 || grid>10000)
   {
     dtostrf(grid/1000,2,1,str);
     strcat(str,"kw");   
