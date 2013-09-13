@@ -87,11 +87,12 @@ const int switch3=19;
 // emonGLCD variables 
 //---------------------------------------------------
 int hour = 12, minute = 0;
-double usekwh = 0, genkwh = 0, Volts = 0, Pf = 0;
+double usekwh = 0, genkwh = 0, Volts = 0; 
+float Pf = 0.00;
 double use_history[7], gen_history[7];
 int cval_use, cval_gen;
-byte page = 1;
-byte light = 1;
+byte page = 4;
+byte light = 2;
 
 //---------------------------------------------------
 // Temperature Sensor Setup
@@ -168,12 +169,6 @@ void loop()
     hour = now.hour();
     minute = now.minute();
     
-    Volts = 0;
-    Volts += (emontx.Vrms) /100;
-    
-    Pf = 0;
-    Pf += (emontx.powerFactor);
-    
     if (SolarPV_type==1){
     usekwh += (emontx.power1 * 0.2) / 3600000;
     genkwh += (emontx.power2 * 0.2) / 3600000;
@@ -232,7 +227,7 @@ void loop()
     }
     else if (page==4)
     {
-      draw_voltage_page("VOLTAGE :" , Volts, "Pf", Pf);
+      draw_voltage_page("VOLTAGE :" , emontx.Vrms/100, "Pf", emontx.powerFactor/100.00);
       draw_temperature_time_footer(temp, mintemp, maxtemp, hour,minute);
       glcd.refresh();
     }
