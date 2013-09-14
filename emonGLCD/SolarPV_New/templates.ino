@@ -8,7 +8,7 @@
 //------------------------------------------------------------------
 // Draws a page showing Voltage and Pokwer Factor Single value in big font
 //------------------------------------------------------------------
-void draw_voltage_page(char* powerstr, double powerval, char* energystr,  double energyval)
+void draw_voltage_page(char* powerstr, double powerval, char* pfstr,  double pfval, char* irmsstr, double irmsval)
 { 
   glcd.clear();
   glcd.fillRect(0,0,128,64,0);
@@ -18,9 +18,12 @@ void draw_voltage_page(char* powerstr, double powerval, char* energystr,  double
   strcpy(str,powerstr);  
   strcat(str,""); 
   glcd.drawString(0,0,str);
-  strcpy(str,energystr);  
+  strcpy(str,pfstr);  
   strcat(str,""); 
   glcd.drawString(0,38,str);
+  strcpy(str,irmsstr);  
+  strcat(str,""); 
+  glcd.drawString(60,38,str);
 
   // volts value
   glcd.setFont(font_helvB24);
@@ -30,10 +33,16 @@ void draw_voltage_page(char* powerstr, double powerval, char* energystr,  double
   
   // Power Factor
   glcd.setFont(font_clR6x8);
-  //if (energyval<10.0) 
-  dtostrf(energyval,0,2,str); //else itoa((int)energyval,str,10);
+  dtostrf(pfval,0,2,str); 
   strcat(str,"");
-  glcd.drawString(20,38,str);        
+  glcd.drawString(20,38,str);
+
+  // Current
+  glcd.setFont(font_clR6x8);
+  dtostrf(irmsval,0,2,str); 
+  strcat(str,"");
+  glcd.drawString(90,38,str);
+    
 }
 
 

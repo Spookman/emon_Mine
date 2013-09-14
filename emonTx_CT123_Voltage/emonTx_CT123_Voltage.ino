@@ -60,7 +60,7 @@ ISR(WDT_vect) {
 EnergyMonitor ct1,ct2,ct3;                                              // Create  instances for each CT channel
 
 typedef struct { 
-  int power1, power2, power3, Vrms, powerFactor; 
+  int power1, power2, power3, Vrms, powerFactor, Irms; 
 } 
 PayloadTX;         // neat way of packaging data for RF comms
 PayloadTX emontx;
@@ -109,6 +109,7 @@ void loop()
 
   emontx.Vrms = ct1.Vrms*100;                                          // AC Mains rms voltage 
   emontx.powerFactor = ct1.powerFactor*100;
+  emontx.Irms = ct1.Irms*100;
 
   if (CT2) {  
     ct2.calcVI(20,2000);                                               //ct.calcVI(number of crossings to sample, time out (ms) if no waveform is detected)                                         
@@ -128,6 +129,8 @@ void loop()
   Serial.print(ct1.Vrms);
   Serial.print(" "); 
   Serial.print(ct1.powerFactor);
+  Serial.print(" ");   
+  Serial.print(ct1.Irms);
   Serial.println(); 
   delay(100);
 
