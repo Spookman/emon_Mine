@@ -40,6 +40,8 @@
 
 #define FILTERSETTLETIME 5000                                           //  Time (ms) to allow the filters to settle before sending data
 
+const int PV_gen_offset=20;
+
 //CT 1 is always enabled
 const int CT2 = 1;                                                      // Set to 1 to enable CT channel 2
 const int CT3 = 1;                                                      // Set to 1 to enable CT channel 3
@@ -112,7 +114,8 @@ void loop()
   emontx.Irms = ct1.Irms*100;
 
   if (CT2) {  
-    ct2.calcVI(20,2000);                                               //ct.calcVI(number of crossings to sample, time out (ms) if no waveform is detected)                                         
+    ct2.calcVI(20,2000);          //ct.calcVI(number of crossings to sample, time out (ms) if no waveform is detected)                                         
+    if (ct2.realPower<PV_gen_offset) ct2.realPower=0;
     emontx.power2 = ct2.realPower;
     Serial.print(" "); 
     Serial.print(emontx.power2);
