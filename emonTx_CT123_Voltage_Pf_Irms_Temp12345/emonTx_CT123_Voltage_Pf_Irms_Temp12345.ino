@@ -74,7 +74,17 @@ DeviceAddress address_T5 = { 0x28, 0x95, 0x51, 0xEE, 0x02, 0x00, 0x00, 0x0F };
 
 
 typedef struct { 
-  int power1, power2, power3, Vrms, powerFactor, Irms, T1, T2, T3, T4, T5; 
+               int power1;                                              // Grid Power Supply
+               int power2;                                              // Solar Power Supply
+               int power3;                                              // Not in use
+               int Vrms;                                                // Voltage
+               int powerFactor;                                         // Power Factor
+               int Irms;                                                // Current
+               int T1;                                                  // Tempreture Probe 1
+               int T2;                                                  // Tempreture Probe 2
+               int T3;                                                  // Tempreture Probe 3
+               int T4;                                                  // Tempreture Probe 4
+               int T5;                                                  // Tempreture Probe 5
 } 
 PayloadTX;         // neat way of packaging data for RF comms
 PayloadTX emontx;
