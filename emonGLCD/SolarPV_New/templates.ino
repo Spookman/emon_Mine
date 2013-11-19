@@ -110,7 +110,7 @@ void draw_temperature_time_footer(double temp, double mintemp, double maxtemp, d
   itoa((int)minute,str2,10);
   strcat(str,str2); 
   glcd.setFont(font_helvB12);
-  glcd.drawString(84,50,str);
+  glcd.drawString(82,50,str);
 
 }
 
