@@ -67,10 +67,10 @@ DallasTemperature sensors(&oneWire);                                    // Pass 
 // By using direct addressing its possible to make sure that as you add temperature sensors
 // To find the addresses of your temperature sensors use the: **temperature_search sketch**
 DeviceAddress address_T1 = { 0x28, 0x42, 0xDD, 0x27, 0x05, 0x00, 0x00, 0x74 };
-DeviceAddress address_T2 = { 0x28, 0x85, 0x7A, 0xEE, 0x02, 0x00, 0x00, 0xDC };
-DeviceAddress address_T3 = { 0x28, 0x95, 0x51, 0xEE, 0x02, 0x00, 0x00, 0x0F };
-DeviceAddress address_T4 = { 0x28, 0x95, 0x51, 0xEE, 0x02, 0x00, 0x00, 0x0F };
-DeviceAddress address_T5 = { 0x28, 0x95, 0x51, 0xEE, 0x02, 0x00, 0x00, 0x0F };
+//DeviceAddress address_T2 = { 0x28, 0x46, 0xD9, 0x09, 0x05, 0x00, 0x00, 0xD2 };
+//DeviceAddress address_T3 = { 0x28, 0xC6, 0xE8, 0x08, 0x05, 0x00, 0x00, 0xFE };
+//DeviceAddress address_T4 = { 0x28, 0x13, 0xB6, 0x27, 0x05, 0x00, 0x00, 0x0C };
+//DeviceAddress address_T5 = { 0x28, 0xDC, 0xD8, 0x27, 0x05, 0x00, 0x00, 0x04 };
 
 
 typedef struct { 
@@ -81,10 +81,10 @@ typedef struct {
                int powerFactor;                                         // Power Factor
                int Irms;                                                // Current
                int T1;                                                  // Tempreture Probe 1
-               int T2;                                                  // Tempreture Probe 2
-               int T3;                                                  // Tempreture Probe 3
-               int T4;                                                  // Tempreture Probe 4
-               int T5;                                                  // Tempreture Probe 5
+//               int T2;                                                  // Tempreture Probe 2
+//               int T3;                                                  // Tempreture Probe 3
+//               int T4;                                                  // Tempreture Probe 4
+//               int T5;                                                  // Tempreture Probe 5
 } 
 PayloadTX;         // neat way of packaging data for RF comms
 PayloadTX emontx;
@@ -161,16 +161,16 @@ void loop()
  sensors.requestTemperatures();                                        // Send the command to get temperatures
   
   emontx.T1 = sensors.getTempC(address_T1) * 100;
-  emontx.T2 = sensors.getTempC(address_T2) * 100;
-  emontx.T3 = sensors.getTempC(address_T3) * 100;
-  emontx.T4 = sensors.getTempC(address_T4) * 100;
-  emontx.T5 = sensors.getTempC(address_T5) * 100;
+//  emontx.T2 = sensors.getTempC(address_T2) * 100;
+//  emontx.T3 = sensors.getTempC(address_T3) * 100;
+//  emontx.T4 = sensors.getTempC(address_T4) * 100;
+//  emontx.T5 = sensors.getTempC(address_T5) * 100;
 
   Serial.print(" ");  Serial.print(emontx.T1);
-  Serial.print(" ");  Serial.print(emontx.T2);
-  Serial.print(" ");  Serial.print(emontx.T3);
-  Serial.print(" ");  Serial.print(emontx.T4);
-  Serial.print(" ");  Serial.print(emontx.T5);
+//  Serial.print(" ");  Serial.print(emontx.T2);
+//  Serial.print(" ");  Serial.print(emontx.T3);
+//  Serial.print(" ");  Serial.print(emontx.T4);
+//  Serial.print(" ");  Serial.print(emontx.T5);
   Serial.println();
   delay(100);
 
