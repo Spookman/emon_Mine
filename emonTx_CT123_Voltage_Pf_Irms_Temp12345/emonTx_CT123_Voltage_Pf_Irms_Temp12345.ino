@@ -167,8 +167,8 @@ void loop()
 //  emontx.T5 = sensors.getTempC(address_T5) * 100;
 
   Serial.print(" ");  Serial.print(emontx.T1);
-//  Serial.print(" ");  Serial.print(emontx.T2);
-//  Serial.print(" ");  Serial.print(emontx.T3);
+  Serial.print(" ");  Serial.print(emontx.T2);
+  Serial.print(" ");  Serial.print(emontx.T3);
 //  Serial.print(" ");  Serial.print(emontx.T4);
 //  Serial.print(" ");  Serial.print(emontx.T5);
   Serial.println();
