@@ -66,7 +66,7 @@ DallasTemperature sensors(&oneWire);                                    // Pass 
  
 // By using direct addressing its possible to make sure that as you add temperature sensors
 // To find the addresses of your temperature sensors use the: **temperature_search sketch**
-DeviceAddress address_T1 = { 0x28, 0x22, 0x70, 0xEE, 0x02, 0x00, 0x00, 0xB8 };
+DeviceAddress address_T1 = { 0x28, 0x42, 0xDD, 0x27, 0x05, 0x00, 0x00, 0x74 };
 DeviceAddress address_T2 = { 0x28, 0x85, 0x7A, 0xEE, 0x02, 0x00, 0x00, 0xDC };
 DeviceAddress address_T3 = { 0x28, 0x95, 0x51, 0xEE, 0x02, 0x00, 0x00, 0x0F };
 DeviceAddress address_T4 = { 0x28, 0x95, 0x51, 0xEE, 0x02, 0x00, 0x00, 0x0F };
@@ -157,8 +157,7 @@ void loop()
   Serial.print(ct1.powerFactor);
   Serial.print(" ");   
   Serial.print(ct1.Irms);
-  Serial.println(); 
-  
+   
  sensors.requestTemperatures();                                        // Send the command to get temperatures
   
   emontx.T1 = sensors.getTempC(address_T1) * 100;
@@ -172,7 +171,7 @@ void loop()
   Serial.print(" ");  Serial.print(emontx.T3);
   Serial.print(" ");  Serial.print(emontx.T4);
   Serial.print(" ");  Serial.print(emontx.T5);
-
+  Serial.println();
   delay(100);
 
   // because millis() returns to zero after 50 days ! 
