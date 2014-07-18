@@ -44,6 +44,8 @@
 const int CT2 = 1;                                                      // Set to 1 to enable CT channel 2
 const int CT3 = 1;                                                      // Set to 1 to enable CT channel 3
 
+const int PV_gen_offset=20;         // When generation drops below this level generation will be set to zero - used to force generation level to zero at night
+
 #define freq RF12_433MHZ                                                // Frequency of RF12B module can be RF12_433MHZ, RF12_868MHZ or RF12_915MHZ. You should use the one matching the module you have.433MHZ, RF12_868MHZ or RF12_915MHZ. You should use the one matching the module you have.
 const int nodeID = 10;                                                  // emonTx RFM12B node ID
 const int networkGroup = 210;                                           // emonTx RFM12B wireless network group - needs to be same as emonBase and emonGLCD needs to be same as emonBase and emonGLCD
@@ -140,6 +142,7 @@ void loop()
   if (CT2) {  
     ct2.calcVI(20,2000);                                               //ct.calcVI(number of crossings to sample, time out (ms) if no waveform is detected)                                         
     emontx.power2 = ct2.realPower;
+    if (emontx.power2<PV_gen_offset) emontx.power2=0;
     Serial.print(" "); 
     Serial.print(emontx.power2);
   }
@@ -161,8 +164,11 @@ void loop()
  sensors.requestTemperatures();                                        // Send the command to get temperatures
   
   emontx.T1 = sensors.getTempC(address_T1) * 100;
+  if (emontx.T1<0) emontx.T1=0;
   emontx.T2 = sensors.getTempC(address_T2) * 100;
+  if (emontx.T2<0) emontx.T2=0;
   emontx.T3 = sensors.getTempC(address_T3) * 100;
+  if (emontx.T3<0) emontx.T3=0;
 //  emontx.T4 = sensors.getTempC(address_T4) * 100;
 //  emontx.T5 = sensors.getTempC(address_T5) * 100;
 
