@@ -61,16 +61,14 @@ const int PV_gen_offset=20;         // When generation drops below this level ge
 const float Ical1=                90.9;                                 // (2000 turns / 22 Ohm burden) = 90.9
 const float Ical2=                90.9;                                 // (2000 turns / 22 Ohm burden) = 90.9
 const float Ical3=                90.9;                                 // (2000 turns / 22 Ohm burden) = 90.9
-const float Ical4=                90.9;                                 // (2000 turns / 120 Ohm burden) = 16.6
-
-const float Vcal=                 276.9;                                // (230V x 13) / (9V x 1.2) = 276.9
+const float Ical4=                16.67;                                 // (2000 turns / 120 Ohm burden) = 16.6
+const float Vcal=                 224.06;                                // (230V x 13) / (9V x 1.2) = 276.9
 
 const float phase_shift=          1.7;
 const int no_of_samples=          1480; 
 const int no_of_half_wavelengths= 20;
 const int timeout=                2000;                               //emonLib timeout 
 const int ACAC_DETECTION_LEVEL=   3000;
-//const byte min_pulsewidth= 110;                                // minimum width of interrupt pulse (default pulse output meters = 100ms)
 const int TEMPERATURE_PRECISION=  11;                 //9 (93.8ms),10 (187.5ms) ,11 (375ms) or 12 (750ms) bits equal to resplution of 0.5C, 0.25C, 0.125C and 0.0625C
 const byte MaxOnewire=             6;                            // +1 since arrya starts at 0. maximum number of DS18B20 one wire sensors
 //#define FILTERSETTLETIME          25000                     // Time (ms) to allow the filters to settle before sending data
@@ -81,10 +79,8 @@ const byte MaxOnewire=             6;                            // +1 since arr
 
 //----------------------------emonTx V3 hard-wired connections--------------------------------------------------------------------------------------------------------------- 
 const byte LEDpin=                6;                              // emonTx V3 LED
-const byte DS18B20_PWR=           19;                              // DS18B20 Power
-//const byte pulse_countINT=         0;                              // Terminal Block Pulse counting pin(emonTx V3.4) - (INT0 / Dig2 emonTx V3.2)
-//const byte pulse_count_pin=        2;                              // Terminal Block Pulse counting pin(emonTx V3.4) - (INT0 / Dig2 emonTx V3.2)
-#define ONE_WIRE_BUS              5                              // DS18B20 Data                     
+const byte DS18B20_PWR=           19;                             // DS18B20 Power
+#define ONE_WIRE_BUS              5                               // DS18B20 Data                     
 //-------------------------------------------------------------------------------------------------------------------------------------------
 
 //Setup DS128B20
@@ -100,8 +96,7 @@ byte numSensors;
 const byte nodeID = 10;                                                // emonTx RFM12B node ID
 const int networkGroup = 210;
 typedef struct { 
-int power1, power2, power3, power4, Vrms, Irms, powerFactor, temp[MaxOnewire]; 
-//int pulseCount; 
+int power1, power2, power4, Vrms, powerFactor, Irms, temp[MaxOnewire], power3; 
 } PayloadTX;     // create structure - a neat way of packaging data for RF comms
   PayloadTX emontx; 
 //-------------------------------------------------------------------------------------------------------------------------------------------
@@ -112,8 +107,6 @@ int power1, power2, power3, power4, Vrms, Irms, powerFactor, temp[MaxOnewire];
 //boolean settled = false;
 boolean CT1, CT2, CT3, CT4, ACAC, debug, DS18B20_STATUS; 
 byte CT_count=0;
-//volatile byte pulseCount = 0;
-//unsigned long pulsetime=0;                                      // Record time of interrupt pulse        
 
 void setup()
 { 
@@ -226,8 +219,6 @@ void setup()
     Serial.print("Node: "); Serial.print(nodeID); 
     Serial.print(" Freq: "); 
     if (RF_freq == RF12_433MHZ) Serial.print("433Mhz");
-//    if (RF_freq == RF12_868MHZ) Serial.print("868Mhz");
-//    if (RF_freq == RF12_915MHZ) Serial.print("915Mhz"); 
     Serial.print(" Network: "); Serial.println(networkGroup);
     
      Serial.print("CT1 CT2 CT3 CT4 VRMS IRMS Pf");
