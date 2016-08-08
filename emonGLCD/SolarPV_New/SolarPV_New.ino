@@ -79,7 +79,7 @@ PayloadGLCD emonglcd;
 //---------------------------------------------------
 //#define emonGLCDV1.3               // un-comment if using older V1.3 emonGLCD PCB - enables required internal pull up resistors. Not needed for V1.4 onwards 
 const int SolarPV_type=2;            // Select solar PV wiring type - Type 1 is when use and gen can be monitored seperatly. Type 2 is when gen and use can only be monitored together, see solar PV application documentation for more info
-const int maxgen=2000;              // peak output of soalr PV system in W - used to calculate when to change cloud icon to a sun
+const int maxgen=2750;              // peak output of soalr PV system in W - used to calculate when to change cloud icon to a sun
 const int PV_gen_offset=20;         // When generation drops below this level generation will be set to zero - used to force generation level to zero at night
 
 const int greenLED=6;               // Green tri-color LED
@@ -214,7 +214,9 @@ void loop()
       cval_gen = cval_gen + (emontx.power2 - cval_gen)*0.50;
     }
 
-    if (cval_gen<PV_gen_offset) cval_gen=0;                  //set generation to zero when generation level drops below a certian level (at night) eg. 20W
+    if (cval_gen<PV_gen_offset) cval_gen=0;     //set generation to zero when generation level drops below a certian level (at night) eg. 20W
+    
+    cval_gen = cval_gen * 1.05;
 
 
     last_switch_state = switch_state;
