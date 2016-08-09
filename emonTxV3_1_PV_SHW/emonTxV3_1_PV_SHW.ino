@@ -64,7 +64,7 @@ const float Ical3=                90.9;                                 // (2000
 const float Ical4=                16.67;                                 // (2000 turns / 120 Ohm burden) = 16.6
 const float Vcal=                 259.18;                                // (230V x 13) / (9V x 1.2) = 276.9
 
-const float phase_shift=          2.0;
+const float phase_shift=          1.7;
 const int no_of_samples=          1480; 
 const int no_of_half_wavelengths= 20;
 const int timeout=                2000;                               //emonLib timeout 
@@ -290,6 +290,7 @@ void loop()
    if (ACAC) 
    {
      ct3.calcVI(no_of_half_wavelengths,timeout); emontx.power3=ct3.realPower;
+     if (emontx.power3<0) emontx.power3=0;
      emontx.Vrms=ct3.Vrms*100;
    }
    else
