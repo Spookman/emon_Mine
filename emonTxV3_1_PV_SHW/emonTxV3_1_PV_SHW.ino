@@ -96,7 +96,7 @@ byte numSensors;
 const byte nodeID = 10;                                                // emonTx RFM12B node ID
 const int networkGroup = 210;
 typedef struct { 
-int power1, power2, power4, Vrms, powerFactor, Irms, temp[MaxOnewire], power3; 
+int power1, power2, power3, power4, Vrms, temp[MaxOnewire]; 
 } PayloadTX;     // create structure - a neat way of packaging data for RF comms
   PayloadTX emontx; 
 //-------------------------------------------------------------------------------------------------------------------------------------------
@@ -221,7 +221,7 @@ void setup()
     if (RF_freq == RF12_433MHZ) Serial.print("433Mhz");
     Serial.print(" Network: "); Serial.println(networkGroup);
     
-     Serial.print("CT1 CT2 CT3 CT4 VRMS IRMS Pf");
+     Serial.print("CT1 CT2 CT3 CT4 VRMS");
     if (DS18B20_STATUS==1){Serial.print(" Temperature 1-"); Serial.print(numSensors);}
     Serial.println(" ");   
    delay(500);  
@@ -261,8 +261,6 @@ void loop()
    {
      ct1.calcVI(no_of_half_wavelengths,timeout); emontx.power1=ct1.realPower;
      emontx.Vrms=ct1.Vrms*100;
-     emontx.powerFactor = ct1.powerFactor*100;
-     emontx.Irms = ct1.Irms*100;
    }
    else
      emontx.power1 = ct1.calcIrms(no_of_samples)*Vrms;                               // Calculate Apparent Power 1  1480 is  number of samples
@@ -317,8 +315,6 @@ void loop()
     Serial.print(emontx.power3); Serial.print(" ");
     Serial.print(emontx.power4); Serial.print(" ");
     Serial.print(emontx.Vrms); Serial.print(" ");
-    Serial.print(emontx.Irms); Serial.print(" ");
-    Serial.print(emontx.powerFactor); Serial.print(" ");
     if (DS18B20_STATUS==1){
       for(byte j=0;j<numSensors;j++){
         Serial.print(emontx.temp[j]);
@@ -382,5 +378,5 @@ double calc_rms(int pin, int samples)
 int get_temperature(byte sensor)                
 {
   float temp=(sensors.getTempC(allAddress[sensor]));
-  if ((temp<125.0) && (temp>-55.0)) return(temp*100);            //if reading is within range for the sensor convert float to int ready to send via RF
+  if ((temp<125.0) && (temp>-55.0)) return(temp*10);            //if reading is within range for the sensor convert float to int ready to send via RF
 }
