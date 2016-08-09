@@ -58,11 +58,11 @@ const byte TIME_BETWEEN_READINGS= 10;                                   //Time b
 
 const int PV_gen_offset=20;         // When generation drops below this level generation will be set to zero - used to force generation level to zero at nigh
 
-const float Ical1=                90.9;                                 // (2000 turns / 22 Ohm burden) = 90.9
-const float Ical2=                90.9;                                 // (2000 turns / 22 Ohm burden) = 90.9
-const float Ical3=                90.9;                                 // (2000 turns / 22 Ohm burden) = 90.9
-const float Ical4=                16.67;                                 // (2000 turns / 120 Ohm burden) = 16.6
-const float Vcal=                 259.18;                                // (230V x 13) / (9V x 1.2) = 276.9
+const float Ical1=                95.9;                                 // (2000 turns / 22 Ohm burden) = 90.9
+const float Ical2=                95.9;                                 // (2000 turns / 22 Ohm burden) = 90.9
+const float Ical3=                95.9;                                 // (2000 turns / 22 Ohm burden) = 90.9
+const float Ical4=                15.67;                                 // (2000 turns / 120 Ohm burden) = 16.6
+const float Vcal=                 258.5;                                // (230V x 13) / (9V x 1.2) = 276.9
 
 const float phase_shift=          1.7;
 const int no_of_samples=          1480; 
@@ -117,7 +117,7 @@ void setup()
   
   Serial.begin(9600);
   Serial.println(" ");
-  Serial.print("emonTx V3.2 PV & SHW"); Serial.println(version*0.1);    //Solar Power and Solar Hot Water Monitoring
+  Serial.print("emonTx V3.2 PV and SHW"); Serial.println(version*0.1);
   Serial.println("OpenEnergyMonitor.org");
   Serial.println("POST.....wait 10s");
   
