@@ -62,9 +62,9 @@ const float Ical1=                90.9;                                 // (2000
 const float Ical2=                90.9;                                 // (2000 turns / 22 Ohm burden) = 90.9
 const float Ical3=                90.9;                                 // (2000 turns / 22 Ohm burden) = 90.9
 const float Ical4=                16.67;                                 // (2000 turns / 120 Ohm burden) = 16.6
-const float Vcal=                 235.5;                                // (230V x 13) / (9V x 1.2) = 276.9
+const float Vcal=                 259.18;                                // (230V x 13) / (9V x 1.2) = 276.9
 
-const float phase_shift=          1.7;
+const float phase_shift=          2.0;
 const int no_of_samples=          1480; 
 const int no_of_half_wavelengths= 20;
 const int timeout=                2000;                               //emonLib timeout 
